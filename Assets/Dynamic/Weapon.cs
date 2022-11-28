@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum WeaponTypes
@@ -63,7 +64,7 @@ public class WeaponAttributes
 public class Bullet
 {
     public Vector3 Pos;
-    public Quaternion Rot;
+    public Vector3 Rot;
     public Vector3 vel;
 
     public Weapon ParentWeapon;
@@ -79,6 +80,7 @@ public class Weapon
 
     public List<Bullet> Tick(float deltaTime , bool reload , bool shoot , Transform Head )
     {
+       // Debug.Log("reload time " + remainingReloadTime + " firetime " + remainingFireTime + " mag " + mag);
         if(remainingFireTime > 0)
         {
             remainingFireTime -= deltaTime;
@@ -94,7 +96,7 @@ public class Weapon
         }
 
 
-        if(!(shoot && remainingReloadTime < 0 && mag > 0)) //if not shooting return null
+        if(!shoot || remainingReloadTime > 0 || mag == 0) //if not shooting return null
             return null;
 
         remainingFireTime = weaponAttributes.FireTime;
@@ -108,20 +110,21 @@ public class Weapon
         {
             Bullet bullet = new Bullet();
             bullet.Pos = Head.position;
-            Quaternion rot = Head.rotation;
+            Vector3 rot = Head.forward;
 
-            rot = Quaternion.Euler(
-                rot.eulerAngles.x + Random.Range(-weaponAttributes.Inaccuracy , weaponAttributes.Inaccuracy) ,
-                rot.eulerAngles.y + Random.Range(-weaponAttributes.Inaccuracy , weaponAttributes.Inaccuracy) ,
-                rot.eulerAngles.z
+            rot = new Vector3(
+                rot.x + Random.Range(-weaponAttributes.Inaccuracy , weaponAttributes.Inaccuracy) ,
+                rot.y + Random.Range(-weaponAttributes.Inaccuracy , weaponAttributes.Inaccuracy) ,
+                rot.z
                 );
 
+            bullet.Rot = rot;
             bullet.ParentWeapon = this;
             bullet.vel = Head.forward * weaponAttributes.ProjectileImpulse;
             bullets.Add(bullet);
         }
 
-        return null;
+        return bullets;
     }
 
     public Weapon(WeaponTypes type)

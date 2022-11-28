@@ -7,8 +7,11 @@ public class HeadMovement : MonoBehaviour
 {
     [SerializeField] float sense;
     float actualPitch = 0.0f;
-    public void tick(PlayerInput input)
+    public void Tick(PlayerInput inputIn)
     {
+        var input = inputIn;
+        input.mDelta *= sense;
+
         Vector2 pitchConstraints = new Vector2Int(-89 , 89);
 
         Vector3 rot = transform.localRotation.eulerAngles;

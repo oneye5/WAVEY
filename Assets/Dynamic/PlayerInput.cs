@@ -4,9 +4,9 @@ public struct PlayerInput
 {
     public Vector2 mDelta;
     public Vector3 keyState;
-    public bool m1State;
+    public bool fire;
     public bool reload;
-    public void tick()
+    public void Tick()
     {
         mDelta.x = Input.GetAxisRaw("MouseX");
         mDelta.y = Input.GetAxisRaw("MouseY");
@@ -19,13 +19,13 @@ public struct PlayerInput
 
 
         if(Input.GetAxisRaw("Fire1") != 0)
-            m1State = true;
-        else
-            m1State = false;
+            fire = true;
+        else fire = false;
 
 
 
         if(Input.GetAxisRaw("Reload") != 0)
             reload = true;
+        else reload = false;
     }
 }

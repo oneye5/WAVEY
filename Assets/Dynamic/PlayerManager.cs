@@ -9,18 +9,22 @@ public class PlayerManager : MonoBehaviour
     BodyMovement bodyMovement;
     SmoothHead smoothHead;
     Rigidbody rb; // main rb of body
+    WeaponManager weaponManager;
     private void Start()
     {
         headMovement = GetComponentInChildren<HeadMovement>();
         bodyMovement = GetComponentInChildren<BodyMovement>();
         smoothHead = GetComponentInChildren<SmoothHead>();
         rb = bodyMovement.gameObject.GetComponent<Rigidbody>();
+        weaponManager = GetComponentInChildren<WeaponManager>();
+        weaponManager.AddWeapon(WeaponTypes.Sniper);
     }
     void Update()
     {
-        playerInput.tick();
-        headMovement.tick(playerInput);
-        bodyMovement.Tick(playerInput , headMovement.gameObject.transform);
+        playerInput.Tick();
+        headMovement.Tick(playerInput);
+        bodyMovement.Tick(playerInput ,headMovement.gameObject.transform);
+        weaponManager.Tick(playerInput,headMovement.gameObject.transform);
     }
     private void LateUpdate()
     {

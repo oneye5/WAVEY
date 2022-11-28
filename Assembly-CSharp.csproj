@@ -58,11 +58,11 @@
   <ItemGroup>
     <Compile Include="Assets\Dynamic\Weapon.cs" />
     <Compile Include="Assets\Dynamic\SmoothHead.cs" />
+    <Compile Include="Assets\Dynamic\WeaponManager.cs" />
     <Compile Include="Assets\Dynamic\HeadMovement.cs" />
     <Compile Include="Assets\Dynamic\PlayerInput.cs" />
     <Compile Include="Assets\Dynamic\PlayerManager.cs" />
     <Compile Include="Assets\Dynamic\BodyMovement.cs" />
-    <Compile Include="Assets\Dynamic\WeaponManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
